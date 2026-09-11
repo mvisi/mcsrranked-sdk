@@ -10,15 +10,15 @@
     "sdk",
     "api"
   ],
-  "homepage": "https://notava1ble.github.io/mcsrranked-sdk/",
+  "homepage": "https://mcsrranked-sdk.mvisi.dev/",
   "bugs": {
-    "url": "https://github.com/Notava1ble/mcsrranked-sdk/issues"
+    "url": "https://github.com/mvisi/mcsrranked-sdk/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Notava1ble/mcsrranked-sdk.git"
+    "url": "git+https://github.com/mvisi/mcsrranked-sdk.git"
   },
-  "author": "Notava1ble",
+  "author": "mvisi",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,
