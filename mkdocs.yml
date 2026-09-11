@@ -2,9 +2,9 @@
 
 site_name: MCSR Ranked SDK
 site_description: TypeScript SDK for the MCSR Ranked API
-site_url: https://notava1ble.github.io/mcsrranked-sdk/
-repo_url: https://github.com/Notava1ble/mcsrranked-sdk
-repo_name: Notava1ble/mcsrranked-sdk
+site_url: https://mcsrranked-sdk.mvisi.dev/
+repo_url: https://github.com/mvisi/mcsrranked-sdk
+repo_name: mvisi/mcsrranked-sdk
 edit_uri: edit/main/docs/
 
 theme:
