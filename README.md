@@ -4,7 +4,7 @@ A TypeScript SDK for the [MCSR Ranked API](https://docs.mcsrranked.com/).
 It provides typed methods for users, matches, leaderboards, weekly races, live
 data, and the MCSR Ranked status page.
 
-Read the [full documentation](https://notava1ble.github.io/mcsrranked-sdk/).
+Read the [full documentation](https://mcsrranked-sdk.mvisi.dev/).
 
 ## Install
 
