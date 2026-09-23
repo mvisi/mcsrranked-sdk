@@ -1,11 +1,13 @@
 import type { QueryParameters } from "./url.js";
 
 export interface RankedFetchOptions extends RequestInit {
+  readonly excludeApiKey?: boolean;
   readonly includePrivateKey?: boolean;
   readonly query?: QueryParameters;
 }
 
 export interface RankedRequestOptions {
+  readonly excludeApiKey?: boolean;
   readonly query?: QueryParameters;
   readonly headers?: HeadersInit;
   readonly includePrivateKey?: boolean;
@@ -30,6 +32,7 @@ export function fetchInitWithoutQuery(
   }
 
   const {
+    excludeApiKey: _excludeApiKey,
     includePrivateKey: _includePrivateKey,
     query: _query,
     ...init

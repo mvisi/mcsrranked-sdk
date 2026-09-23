@@ -48,6 +48,7 @@ function assertRetries(retries: number): void {
 }
 
 export interface RankedClientOptions {
+  readonly apiKey?: string | undefined;
   readonly baseUrl?: string;
   readonly fetch?: typeof globalThis.fetch;
   readonly privateKey?: string | undefined;
@@ -57,6 +58,7 @@ export interface RankedClientOptions {
 }
 
 export class RankedClient {
+  readonly #apiKey: string | undefined;
   readonly #baseUrl: URL;
   readonly #fetchImplementation: typeof globalThis.fetch;
   readonly #privateKey: string | undefined;
@@ -74,6 +76,7 @@ export class RankedClient {
   constructor(options: RankedClientOptions = {}) {
     const fetchImplementation = options.fetch ?? globalThis.fetch;
 
+    this.#apiKey = options.apiKey;
     this.#baseUrl = new URL(options.baseUrl ?? DEFAULT_BASE_URL);
     this.#fetchImplementation = fetchImplementation.bind(globalThis);
     this.#privateKey = options.privateKey;
@@ -111,7 +114,7 @@ export class RankedClient {
       () =>
         this.#requestUrlWithMetadata(
           new URL(STATUS_HEARTBEATS_URL),
-          undefined,
+          { excludeApiKey: true },
           processRawResponse,
         ),
       validator,
@@ -121,28 +124,47 @@ export class RankedClient {
   fetch(path: string, options?: RankedFetchOptions): Promise<Response> {
     const url = buildUrl(this.#baseUrl, path, options?.query);
     const init = fetchInitWithoutQuery(options);
+    const headers = this.#headersWithConfiguredKeys(
+      init?.headers,
+      options?.excludeApiKey === true,
+      options?.includePrivateKey === true,
+    );
 
-    if (options?.includePrivateKey !== true) {
+    if (headers === init?.headers) {
       return this.#fetchImplementation(url, init);
     }
 
     return this.#fetchImplementation(url, {
       ...init,
-      headers: this.#headersWithPrivateKey(init?.headers),
+      ...(headers === undefined ? {} : { headers }),
     });
   }
 
-  #headersWithPrivateKey(headers?: HeadersInit): Headers {
-    if (this.#privateKey === undefined) {
-      throw new RankedError(
-        "MCSR Ranked private key is required for this request",
-        { code: "MISSING_PRIVATE_KEY" },
-      );
+  #headersWithConfiguredKeys(
+    headers: HeadersInit | undefined,
+    excludeApiKey: boolean,
+    includePrivateKey: boolean,
+  ): HeadersInit | undefined {
+    let configuredHeaders = headers;
+
+    if (this.#apiKey !== undefined && !excludeApiKey) {
+      configuredHeaders = new Headers(configuredHeaders);
+      configuredHeaders.set("api-key", this.#apiKey);
     }
 
-    const authenticatedHeaders = new Headers(headers);
-    authenticatedHeaders.set("Private-Key", this.#privateKey);
-    return authenticatedHeaders;
+    if (includePrivateKey) {
+      if (this.#privateKey === undefined) {
+        throw new RankedError(
+          "MCSR Ranked private key is required for this request",
+          { code: "MISSING_PRIVATE_KEY" },
+        );
+      }
+
+      configuredHeaders = new Headers(configuredHeaders);
+      configuredHeaders.set("Private-Key", this.#privateKey);
+    }
+
+    return configuredHeaders;
   }
 
   async #requestAttempt<T>(
@@ -162,10 +184,11 @@ export class RankedClient {
         throw initialCancellationError;
       }
 
-      const headers =
-        options?.includePrivateKey === true
-          ? this.#headersWithPrivateKey(options.headers)
-          : options?.headers;
+      const headers = this.#headersWithConfiguredKeys(
+        options?.headers,
+        options?.excludeApiKey === true,
+        options?.includePrivateKey === true,
+      );
       let response: Response;
 
       try {

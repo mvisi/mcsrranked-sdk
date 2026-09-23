@@ -443,6 +443,65 @@ describe("request", () => {
     expect(receivedKeys).toEqual(["secret-key", "secret-key", null]);
   });
 
+  it("does not add the private key to caller-owned headers", async () => {
+    const headers = new Headers({ "x-request-id": "test" });
+    const receivedKeys: Array<string | null> = [];
+    const client = new RankedClient({
+      privateKey: "secret-key",
+      fetch: async (_input, init) => {
+        receivedKeys.push(new Headers(init?.headers).get("Private-Key"));
+        return Response.json({ status: "success", data: {} });
+      },
+    });
+
+    await client.request("custom", { headers, includePrivateKey: true });
+    await client.fetch("custom", { headers });
+
+    expect(receivedKeys).toEqual(["secret-key", null]);
+    expect(headers.get("Private-Key")).toBeNull();
+  });
+
+  it("adds the configured API key to requests and fetches by default", async () => {
+    const receivedKeys: Array<string | null> = [];
+    const client = new RankedClient({
+      apiKey: "expanded-rate-limit-key",
+      fetch: async (_input, init) => {
+        receivedKeys.push(new Headers(init?.headers).get("api-key"));
+        return new Response(
+          JSON.stringify({ status: "success", data: { ok: true } }),
+          { status: 200 },
+        );
+      },
+    });
+
+    await client.request("custom");
+    await client.fetch("custom");
+
+    expect(receivedKeys).toEqual([
+      "expanded-rate-limit-key",
+      "expanded-rate-limit-key",
+    ]);
+  });
+
+  it("can exclude the configured API key from a request or fetch", async () => {
+    const receivedKeys: Array<string | null> = [];
+    const client = new RankedClient({
+      apiKey: "expanded-rate-limit-key",
+      fetch: async (_input, init) => {
+        receivedKeys.push(new Headers(init?.headers).get("api-key"));
+        return new Response(
+          JSON.stringify({ status: "success", data: { ok: true } }),
+          { status: 200 },
+        );
+      },
+    });
+
+    await client.request("custom", { excludeApiKey: true });
+    await client.fetch("custom", { excludeApiKey: true });
+
+    expect(receivedKeys).toEqual([null, null]);
+  });
+
   it.each([-1, 0.5, Number.NaN, Number.POSITIVE_INFINITY])(
     "rejects an invalid retry count: %s",
     (retries) => {

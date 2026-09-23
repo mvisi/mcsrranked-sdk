@@ -26,6 +26,7 @@ request<T = unknown>(
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `excludeApiKey` | `boolean` | Omits the configured expanded-rate-limit API key |
 | `query` | `QueryParameters` | Adds query-string values |
 | `headers` | `HeadersInit` | Adds request headers |
 | `includePrivateKey` | `boolean` | Adds the configured private key header |
@@ -57,10 +58,10 @@ const body = await response.json();
 fetch(path: string, options?: RankedFetchOptions): Promise<Response>
 ```
 
-`RankedFetchOptions` includes the standard `RequestInit` options plus `query`
-and `includePrivateKey`. This method does not apply the SDK timeout, retries,
-response unwrapping, HTTP error conversion, or response validation. Native
-fetch failures keep their original error.
+`RankedFetchOptions` includes the standard `RequestInit` options plus `query`,
+`excludeApiKey`, and `includePrivateKey`. This method does not apply the SDK
+timeout, retries, response unwrapping, HTTP error conversion, or response
+validation. Native fetch failures keep their original error.
 
 The same relative-path restriction applies to `fetch()`, so an invalid path
 throws `TypeError`. If `includePrivateKey` is `true` but the client has no key,

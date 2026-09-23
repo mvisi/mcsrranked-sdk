@@ -34,14 +34,15 @@ new RankedClient(options?: RankedClientOptions)
 
 ### Options
 
-| Option       | Type                      | Default                       | Description                                        |
-| ------------ | ------------------------- | ----------------------------- | -------------------------------------------------- |
-| `baseUrl`    | `string`                  | `https://api.mcsrranked.com/` | Replaces the base URL for API requests             |
-| `fetch`      | `typeof globalThis.fetch` | `globalThis.fetch`            | Replaces the fetch implementation                  |
-| `privateKey` | `string`                  | None                          | Authenticates endpoints that require a private key |
-| `retries`    | `number`                  | `2`                           | Retries network failures and timeouts              |
-| `timeout`    | `number`                  | `10000`                       | Limits each request attempt in milliseconds        |
-| `validation` | `ValidationConfiguration` | `"warn"`                      | Controls response-shape validation                 |
+| Option       | Type                      | Default                       | Description                                              |
+| ------------ | ------------------------- | ----------------------------- | -------------------------------------------------------- |
+| `apiKey`     | `string`                  | None                          | Sends an `api-key` header for expanded rate limits       |
+| `baseUrl`    | `string`                  | `https://api.mcsrranked.com/` | Replaces the base URL for API requests                   |
+| `fetch`      | `typeof globalThis.fetch` | `globalThis.fetch`            | Replaces the fetch implementation                        |
+| `privateKey` | `string`                  | None                          | Authenticates endpoints that require a private key       |
+| `retries`    | `number`                  | `2`                           | Retries network failures and timeouts                    |
+| `timeout`    | `number`                  | `10000`                       | Limits each request attempt in milliseconds              |
+| `validation` | `ValidationConfiguration` | `"warn"`                      | Controls response-shape validation                       |
 
 `timeout` must be a finite positive number. `retries` must be a finite,
 non-negative integer. The constructor throws `TypeError` when either value is

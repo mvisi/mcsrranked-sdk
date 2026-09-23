@@ -6,10 +6,13 @@ import { statusHeartbeatsFixture } from "./fixtures/status.js";
 describe("status.heartbeats", () => {
   it("requests the status host and returns its raw JSON response", async () => {
     let requestedUrl: string | undefined;
+    let apiKey: string | null = null;
     const client = new RankedClient({
+      apiKey: "expanded-rate-limit-key",
       baseUrl: "https://ranked.example/api/",
-      fetch: async (input) => {
+      fetch: async (input, init) => {
         requestedUrl = String(input);
+        apiKey = new Headers(init?.headers).get("api-key");
         return new Response(JSON.stringify(statusHeartbeatsFixture), {
           status: 200,
         });
@@ -21,6 +24,7 @@ describe("status.heartbeats", () => {
     expect(requestedUrl).toBe(
       "https://status.mcsrranked.com/api/status-page/heartbeat/mcsrranked",
     );
+    expect(apiKey).toBeNull();
     expect(status).toEqual(statusHeartbeatsFixture);
   });
 

@@ -51,3 +51,18 @@ try {
 ```
 
 Authentication is required only on the `users.live` endpoint.
+
+## Configure an expanded-rate-limit key
+
+Pass an expanded-rate-limit API key to `RankedClient` when you have one:
+
+```ts
+const ranked = new RankedClient({
+  apiKey: process.env.MCSR_RANKED_API_KEY,
+});
+```
+
+The client sends it in the `api-key` header to MCSR Ranked API endpoints. It
+does not send the key to the separately hosted status endpoint. Low-level
+`request()` and `fetch()` calls can omit it for a specific request by passing
+`excludeApiKey: true`.
