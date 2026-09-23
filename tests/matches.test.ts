@@ -33,6 +33,7 @@ describe("matches.list", () => {
         "&includedecay=true",
     );
     expect(matches).toEqual([matchFixture]);
+    expect(matches[0]?.replayExists).toBe(1);
   });
 });
 
@@ -77,7 +78,7 @@ describe("matches.get", () => {
     expect(match).toEqual(matchDetailFixture);
     expect(match.completions[0]?.time).toBe(620_000);
     expect(match.timelines[0]?.type).toBe("story.enter_the_nether");
-    expect(match.replayExist).toBe(true);
+    expect(match.replayExists).toBe(1);
   });
 
   it("requires detail-only fields", async () => {
@@ -99,7 +100,6 @@ describe("matches.get", () => {
         problems: expect.arrayContaining([
           expect.objectContaining({ path: "completions" }),
           expect.objectContaining({ path: "timelines" }),
-          expect.objectContaining({ path: "replayExist" }),
         ]),
       }),
     );

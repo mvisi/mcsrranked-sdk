@@ -49,11 +49,11 @@ const match = await mcsrranked.matches.get(42);
 
 console.log(match.completions);
 console.log(match.timelines);
-console.log(match.replayExist);
+console.log(match.replayExists);
 ```
 
-The detailed response includes `completions`, `timelines`, and `replayExist`.
-These fields are not guaranteed on matches returned by list methods.
+The detailed response includes `completions` and `timelines`. List and detail
+responses both include the numeric `replayExists` field.
 
 !!! note "Historical data"
 

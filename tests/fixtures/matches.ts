@@ -40,6 +40,7 @@ export const matchFixture = {
   ],
   tag: null,
   beginner: false,
+  replayExists: 1,
   botSource: null,
   seedType: "BURIED_TREASURE",
   bastionType: "HOUSING",
@@ -88,5 +89,4 @@ export const matchDetailFixture = {
       type: "story.enter_the_nether",
     },
   ],
-  replayExist: true,
 };

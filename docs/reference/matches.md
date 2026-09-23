@@ -32,7 +32,7 @@ const matches = await mcsrranked.matches.list({
 ```
 
 The method returns `Promise<Match[]>`. It returns an empty array when the API
-has no matching entries.
+has no matching entries. Each match includes the numeric `replayExists` field.
 
 ## `matches.get()`
 
@@ -51,8 +51,8 @@ const match = await mcsrranked.matches.get(42);
 console.log(match.timelines);
 ```
 
-`MatchDetail` includes all `Match` fields plus `completions`, `timelines`, and
-`replayExist`.
+`MatchDetail` includes all `Match` fields plus `completions` and `timelines`.
+The API currently returns `0` or `1` for `replayExists`.
 
 !!! note "Match fields"
 

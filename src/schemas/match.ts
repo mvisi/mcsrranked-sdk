@@ -42,6 +42,7 @@ export const matchSchema = v.object({
   ),
   tag: v.nullable(v.string()),
   beginner: v.boolean(),
+  replayExists: integer,
   botSource: nullableInteger,
   seedType: v.nullable(v.string()),
   bastionType: v.nullable(v.string()),
@@ -73,7 +74,6 @@ export const matchDetailSchema = v.object({
       type: v.string(),
     }),
   ),
-  replayExist: v.boolean(),
 });
 
 export type Match = v.InferOutput<typeof matchSchema>;
