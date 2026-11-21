@@ -73,6 +73,22 @@ console.log(history.seasonResults);
 
 `seasonResults` is an object keyed by season number.
 
+Each season result has a `phases` array with the phase points the player
+earned. Check `type` before reading a phase's rating, because phases can be
+scored in two ways:
+
+- `"eloRate"` phases have `eloRate` and `eloRank`, the player's Elo and rank
+  at the end of the phase.
+- `"highest"` phases have `highestRate` and `highestRank`, the player's peak
+  Elo and rank during the phase.
+
+```ts
+for (const phase of history.seasonResults["12"]?.phases ?? []) {
+  const rate = phase.type === "highest" ? phase.highestRate : phase.eloRate;
+  console.log(`Phase ${phase.phase}: ${phase.point} points at ${rate} Elo`);
+}
+```
+
 ## `users.live()`
 
 Gets the player's current private live state.

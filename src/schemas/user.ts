@@ -54,14 +54,25 @@ export const seasonResultSchema = v.object({
     }),
   ),
   highest: nullableInteger,
+  phaseHighest: nullableInteger,
   lowest: nullableInteger,
   phases: v.array(
-    v.object({
-      phase: integer,
-      eloRate: nullableInteger,
-      eloRank: nullableInteger,
-      point: integer,
-    }),
+    v.variant("type", [
+      v.object({
+        type: v.literal("eloRate"),
+        phase: integer,
+        eloRate: nullableInteger,
+        eloRank: nullableInteger,
+        point: integer,
+      }),
+      v.object({
+        type: v.literal("highest"),
+        phase: integer,
+        highestRate: nullableInteger,
+        highestRank: nullableInteger,
+        point: integer,
+      }),
+    ]),
   ),
 });
 

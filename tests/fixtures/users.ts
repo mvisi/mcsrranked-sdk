@@ -24,13 +24,22 @@ export const seasonResultFixture = {
     percentile: 1.2,
   },
   highest: 1_550,
+  phaseHighest: 1_550,
   lowest: 1_350,
   phases: [
     {
+      type: "eloRate",
       phase: 1,
       eloRate: 1_500,
       eloRank: 25,
       point: 8,
+    },
+    {
+      type: "highest",
+      phase: 2,
+      highestRate: 1_550,
+      highestRank: 20,
+      point: 10,
     },
   ],
 };
