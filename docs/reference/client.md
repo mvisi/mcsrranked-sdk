@@ -62,6 +62,8 @@ resolution replaces the last path segment.
 | [`leaderboards`](leaderboards.md) | Elo, phase, and record leaderboards                         |
 | [`live`](live.md)                 | Public live overview                                        |
 | [`weeklyRaces`](weekly-races.md)  | Current and earlier weekly races                            |
+| [`playoffs`](playoffs.md)         | Season playoff brackets and results                         |
+| [`tourneys`](tourneys.md)         | Qualifier, showdown, and World Championship standings       |
 | [`status`](status.md)             | Public service heartbeats and uptime                        |
 
 ## Low-level methods

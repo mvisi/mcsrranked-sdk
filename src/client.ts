@@ -8,7 +8,9 @@ import {
 import { LeaderboardsResource } from "./resources/leaderboards.js";
 import { LiveResource } from "./resources/live.js";
 import { MatchesResource } from "./resources/matches.js";
+import { PlayoffsResource } from "./resources/playoffs.js";
 import { StatusResource } from "./resources/status.js";
+import { TourneysResource } from "./resources/tourneys.js";
 import { UsersResource } from "./resources/users.js";
 import { VersusResource } from "./resources/versus.js";
 import { WeeklyRacesResource } from "./resources/weekly-races.js";
@@ -71,6 +73,8 @@ export class RankedClient {
   readonly live: LiveResource;
   readonly leaderboards: LeaderboardsResource;
   readonly weeklyRaces: WeeklyRacesResource;
+  readonly playoffs: PlayoffsResource;
+  readonly tourneys: TourneysResource;
   readonly status: StatusResource;
 
   constructor(options: RankedClientOptions = {}) {
@@ -107,6 +111,14 @@ export class RankedClient {
       validator,
     );
     this.weeklyRaces = new WeeklyRacesResource(
+      (path, requestOptions) => this.#requestWithMetadata(path, requestOptions),
+      validator,
+    );
+    this.playoffs = new PlayoffsResource(
+      (path, requestOptions) => this.#requestWithMetadata(path, requestOptions),
+      validator,
+    );
+    this.tourneys = new TourneysResource(
       (path, requestOptions) => this.#requestWithMetadata(path, requestOptions),
       validator,
     );

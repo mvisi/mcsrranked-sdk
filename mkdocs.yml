@@ -59,6 +59,8 @@ nav:
       - Leaderboards: reference/leaderboards.md
       - Live: reference/live.md
       - Weekly races: reference/weekly-races.md
+      - Playoffs: reference/playoffs.md
+      - Tourneys: reference/tourneys.md
       - Status: reference/status.md
       - Errors: reference/errors.md
   - Advanced:

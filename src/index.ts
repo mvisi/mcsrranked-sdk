@@ -8,6 +8,7 @@ export type {
   RecordLeaderboardOptions,
 } from "./resources/leaderboards.js";
 export type { MatchesListOptions } from "./resources/matches.js";
+export type { TourneyId } from "./resources/tourneys.js";
 export type {
   MatchSort,
   UsersGetOptions,
@@ -24,7 +25,19 @@ export type {
 } from "./schemas/leaderboard.js";
 export type { LiveOverview } from "./schemas/live.js";
 export type { Match, MatchDetail, MatchSeed } from "./schemas/match.js";
+export type {
+  PlayoffMatch,
+  PlayoffPlayer,
+  Playoffs,
+  PlayoffsPage,
+} from "./schemas/playoffs.js";
 export type { StatusHeartbeats } from "./schemas/status.js";
+export type {
+  Tourney,
+  TourneyCompletion,
+  TourneyEntry,
+  TourneyPlayer,
+} from "./schemas/tourney.js";
 export type {
   User,
   UserLive,

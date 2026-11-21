@@ -33,7 +33,7 @@ MCSR Ranked SDK helps you interact with the Ranked API through a typed interface
 - **Full API coverage**
 
   Work with users, matches, comparisons, leaderboards, live data, weekly
-  races, and service status.
+  races, playoffs, tourneys, and service status.
 
 - **Automatic retries**
 
